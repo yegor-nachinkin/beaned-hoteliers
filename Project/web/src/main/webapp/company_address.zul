@@ -1,0 +1,39 @@
+<zk>
+<window border="normal" title="Company address">
+	<vlayout>
+        
+    <zscript><![CDATA[
+        import ltd.very.data.Sqler;
+        String companyId = Executions.getCurrent().getParameter("company_id");
+        Sqler sql = new Sqler();
+        ListModelList lm = new ListModelList(sql.getCompanyAddressAndName(Integer.parseInt(companyId)));
+        RowRenderer rr = new RowRenderer(){
+          render(Row row, String[] data, int index){
+            for(t : data){
+            row.appendChild(new Label(t));
+            }
+            Button b = new Button("all companies");
+            b.setHref("index.zul");
+            row.appendChild(b);
+          }
+        };
+	]]></zscript>
+	
+    <html id="myhtml" />
+	<grid model="${lm}" rowRenderer="${rr}" width="900px"> 
+             <columns sizable="true">
+             <column label="Company" />
+             <column label="Address" />
+             <column />
+         </columns>
+    </grid>
+    <script id="titlescript" />
+    
+<zscript><![CDATA[
+    titlescript.setContent("document.title = 'COMPANY ADDRESS';");
+    myhtml.setContent("<h2>" + sql.getCompanyName(Integer.parseInt(companyId)).toUpperCase() + ": COMPANY ADDRESS</h2>");
+	]]></zscript>
+    
+    	</vlayout>
+</window>
+</zk>

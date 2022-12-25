@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>ltd.very.hoteliers</groupId>
+    <artifactId>eared-ejb</artifactId>
+    <version>a</version>
+    <packaging>pom</packaging>
+    <name>eared-ejb</name>
+    <description>This project demonstrates something, perhaps... this is the top level POM file</description>
+
+    <modules>
+        <module>ejb</module>
+        <module>web</module>
+        <module>ear</module>
+    </modules>
+    
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Define the version of the EJB jar so that we don't need
+                to repeat ourselves in every module -->
+            <dependency>
+                <groupId>ltd.very.hoteliers</groupId>
+                <artifactId>ejb-project</artifactId>
+                <version>a</version>
+                <type>ejb</type>
+            </dependency>
+
+            <!-- Define the version of the WAR so that we don't need to repeat
+                ourselves in every module -->
+            <dependency>
+                <groupId>ltd.very.hoteliers</groupId>
+                <artifactId>web-project</artifactId>
+                <version>a</version>
+                <type>war</type>
+                <scope>compile</scope>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <!-- The WildFly plug-in deploys your ear to a local JBoss EAP container. 
+                Due to Maven's lack of intelligence with EARs we need to configure
+                the WildFly Maven plug-in to skip deployment for all modules. We then enable
+                it specifically in the ear module. -->
+            <!--
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            -->
+        </plugins>
+    </build>
+</project>

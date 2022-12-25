@@ -1,0 +1,42 @@
+<zk>
+<window border="normal" title="Branch address">
+	<vlayout>
+        
+    <zscript><![CDATA[
+        import ltd.very.data.Sqler;
+        String branchId = Executions.getCurrent().getParameter("branch_id");
+        Sqler sql = new Sqler();
+        ListModelList lm = new ListModelList(sql.getBranchAddressAndName(Integer.parseInt(branchId)));
+        RowRenderer rr = new RowRenderer(){
+          render(Row row, String[] data, int index){
+            row.appendChild(new Label(data[0]));
+            row.appendChild(new Label(data[1]));
+            row.appendChild(new Label(data[2]));
+            Button b = new Button("all branches");
+            b.setHref("company_branches.zul?company_id=" + data[3]);
+            row.appendChild(b);
+          }
+        };
+        String[] names = sql.getBranchAndCompanyNamesByBranchId(Integer.parseInt(branchId));
+	]]></zscript>
+	
+    <html id="myhtml" />
+	<grid model="${lm}" rowRenderer="${rr}" width="900px"> 
+             <columns sizable="true">
+             <column label="Company" />
+             <column label="Branch" />
+             <column label="Address" />
+             <column />
+         </columns>
+    </grid>
+    <script id="titlescript" />
+    
+<zscript><![CDATA[
+    titlescript.setContent("document.title = 'BRANCH ADDRESS';");
+    
+    myhtml.setContent("<h2>" + names[0].toUpperCase() + " : " + names[1].toUpperCase() + " : BRANCH ADDRESS</h2>");
+	]]></zscript>
+    
+    	</vlayout>
+</window>
+</zk>

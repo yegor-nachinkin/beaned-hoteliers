@@ -1,0 +1,43 @@
+<zk>
+<window border="normal" title="All companies">
+	<vlayout>
+        
+    <zscript><![CDATA[
+        import ltd.very.data.Sqler;
+        ListModelList lm = new ListModelList((new Sqler()).getAllCompanies());
+        RowRenderer rr = new RowRenderer(){
+          render(Row row, String[] data, int index){
+            String companyId = data[0];
+            for(String t : data){
+                row.appendChild(new Label(t));
+            }
+            Button b = new Button("address");
+            b.setHref("company_address.zul?company_id=" + companyId);
+            row.appendChild(b);
+            Button bb = new Button("branches");
+            bb.setHref("company_branches.zul?company_id=" + companyId);
+            row.appendChild(bb);
+          }
+        };
+	]]></zscript>
+	
+    <html><h2>ALL COMPANIES</h2></html>
+	<grid model="${lm}" rowRenderer="${rr}" width="900px"> 
+             <columns sizable="true">
+             <column label="Id" />
+             <column label="Company" />
+             <column label="Legal form" />
+             <column />
+             <column />
+         </columns>
+    </grid>
+    <html id="myhtml" />
+    <script id="titlescript" />
+    
+<zscript><![CDATA[
+    myhtml.setContent("<span style=\"font-size:0.5em;\">strange things do happen</span>");
+    titlescript.setContent("document.title = 'ALL COMPANIES';");
+	]]></zscript>
+    	</vlayout>
+</window>
+</zk>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<!-- this pom builds the EAR file -->
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ltd.very.hoteliers</groupId>
+    <artifactId>earness</artifactId>
+    <version>a</version>
+    <packaging>ear</packaging>
+    <name>SomeEarness</name>
+    <description>This project demonstrates what it can at its best. This is the EAR POM file</description>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>ltd.very.hoteliers</groupId>
+            <artifactId>ejb-project</artifactId>
+            <version>a</version>
+            <type>ejb</type>
+        </dependency>
+
+        <dependency>
+            <groupId>ltd.very.hoteliers</groupId>
+            <artifactId>web-project</artifactId>
+            <version>a</version>
+            <type>war</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>earness</finalName>
+        <plugins>
+            <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-ear-plugin -->            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <!-- Jakarta EE version -->
+                    <version>9</version>
+                    <!-- Use Jakarta EE ear libraries as needed. Jakarta EE ear libraries
+                        are an easy way to package any libraries needed in the ear, and automatically
+                        have any modules (EJB-JARs and WARs) use them -->
+                    <defaultLibBundleDir>lib</defaultLibBundleDir>
+                    <modules>
+                        <!-- Default context root of the web app is /ejb-in-ear-web.  -->
+                        <!-- I want something different though...  -->
+                        <webModule>
+                            <groupId>ltd.very.hoteliers</groupId>
+                            <artifactId>web-project</artifactId>
+                            <contextRoot>/earness</contextRoot>
+                        </webModule>
+                    </modules>
+                    <outputFileNameMapping>@{artifactId}@@{dashClassifier?}@.@{extension}@</outputFileNameMapping>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
